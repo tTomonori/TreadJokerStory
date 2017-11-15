@@ -1,0 +1,13 @@
+Map.setMap({
+	map:[
+		[0,0,0,0],
+		[1,1,1,1],
+		[2,2,2,2]
+	],
+	mapChip:{
+		0:{ground:{image:"kusa1-kusa2",x:0,y:0},object:{image:"",x:0,y:0},accessories:{image:"",x:0,y:0},canOn:true},
+		1:{ground:{image:"kusa1-kusa2.png",x:0,y:1},object:{image:"",x:0,y:0},accessories:{image:"",x:0,y:0},canOn:true},
+		2:{ground:{image:"kusa1-kusa2.png",x:0,y:2},object:{image:"",x:0,y:0},accessories:{image:"",x:0,y:0},canOn:false}
+	},
+	creatures:[]
+})

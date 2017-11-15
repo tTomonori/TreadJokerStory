@@ -1,0 +1,41 @@
+class Mas{
+	constructor(aMas){
+		//マス
+		this.tag=document.createElement("div");
+		this.tag.style.display="inline-block";
+		this.tag.style.width="30px";
+		this.tag.style.height="30px";
+		this.tag.style.overflow="hidden";
+		//地面
+		this.ground=document.createElement("img");
+		this.ground.style.position="absolute";
+		this.ground.style.width="100%";
+		this.ground.style.height="100%";
+		this.ground.style.marginTop=
+		this.ground.style.marginLeft=
+		this.ground.img=
+		//オブジェクト
+		this.object=document.createElement("img");
+		this.object.style.position="absolute";
+		this.object.style.width="100%";
+		this.object.style.height="100%";
+		this.object.style.marginTop=
+		this.object.style.marginLeft=
+		this.object.img=
+		//装飾品
+		this.accessories=document.createElement("img");
+		this.accessories.style.position="absolute";
+		this.accessories.style.width="100%";
+		this.accessories.style.height="100%";
+		this.accessories.style.marginTop=
+		this.accessories.style.marginLeft=
+		this.accessories.img=
+
+		this.tag.appendChild(this.ground);
+		this.tag.appendChild(this.object);
+		this.tag.appendChild(this.accessories);
+	}
+	getElement(){
+		return this.tag;
+	}
+}
