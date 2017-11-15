@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>manual</title>
+</head>
+<style type="text/css">
+
+button{
+width: 120px;
+height: 60px;
+font-size: 30px;
+}
+
+</style>
+<script>
+	// You can also require other files to run in this process
+	require('../renderer.js')
+	const $=require("jquery");
+	const electron=require("electron");
+	const ipc=electron.ipcRenderer;
+</script>
+<body style="margin:0;overflow:hidden;width:100vw;height:100vh;">
+	<img src="../image/manual/スライド1.PNG" id="manual" style="min-width:calc(100% + 2px);min-height: 100%; overflow: hidden;background-size:cover;margin-left:-2px">
+	<button value="進む" onclick="next()" style="position: absolute; top: 600px;left: 800px">進む</button>
+	<button value="戻る" onclick="back()" style="position: absolute; top: 600px;left: 50px">戻る</button>
+</body>
+<script>
+	var thisPage = 1;
+	var slideNum = 11;
+	function next() {
+		thisPage++;
+		if(thisPage>slideNum) location.href = "../title/title.html";
+		else $("#manual")[0].src = '../image/manual/スライド'+thisPage+'.PNG';
+	}
+	function back(){
+		thisPage--;
+		if(thisPage==0) location.href = "../title/title.html";
+		else $("#manual")[0].src = '../image/manual/スライド'+thisPage+'.PNG';
+	}
+</script>
+</html>

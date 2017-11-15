@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>battle</title>
+</head>
+<script>
+	// You can also require other files to run in this process
+	require('../renderer.js')
+	const $=require("jquery");
+	const electron=require("electron");
+	const ipc=electron.ipcRenderer;
+</script>
+<style>
+input {
+background: #67c5ff;
+display: inline-block;
+text-decoration: none;
+color: #fff;
+padding:3px;
+outline: none;
+font-size: 25px;
+width: 14%;
+border-radius: 3px;
+transition: .4s;
+}
+input:hover {
+background: #678dff;
+color: white;
+}
+</style>
+<link rel="stylesheet" href="../public.css">
+<body style="margin:0;width:100vw;height:100vh;overflow:hidden;background-image:url(../image/background/sakaba0331_800.jpg);background-repeat:no-repeat;background-size:cover;">
+<div id="left" style="width:80%;height:100%;float:left;">
+<div id="battleArea" style="width:100%;height:90%;">
+	<div id="field" style="height:100%;width:100%;padding-left:19%">
+		<h1 id="text" style="height:40px;font-size:33px;margin:5px;background-color:#640bff;border:double;padding:5px;border-radius: 10px;color:#fff;display:inline-block; margin-left: 25px">バトルを開始します</h1>
+		<table id="cardTable" style=""></table>
+		<div id="charaImages" style="position:fixed;top:0;left:0;"></div>
+		<div id="effectImages" style="position:fixed;top:0;left:0;"></div>
+		<div id="preDamage" style="position:fixed;top:0;left:0;"></div>
+	</div>
+</div>
+<div id="deckArea" style="width:100%;height:10%;"></div>
+<div id="cardText" style="background-color:#640bff;border:double;padding:5px;border-radius: 10px;position: absolute;bottom:65px;color:#fff;display: none;pointer-events: none;z-index:1"></div>
+<div id="order" style="position:fixed;width:15%;height:80%;top:5%;left:2%;padding:10px;pointer-events: none"></div>
+<input id="finishButton" type="button" style="display:none;position:fixed;left:1%;bottom:12%;fontSize:20px;" value="タイトルへ" onclick="location.href='../title/title.html'">
+</div>
+
+<div id="right" style="width:20%;height:100%;float:right">
+<div id="log" style="width:90%;height:20%;overflow:scroll;background:rgba(0,50,0,0.4);border:solid 2px #000;color:#fff;padding:3px;border-radius:10px;margin-top:7px;margin-bottom:5px;"></div>
+<div id="status" style="width:100%;height:80%;overflow: scroll;"></div>
+</div>
+
+<div id="adressForm" style="position:fixed;height:40px;width:300px;font-size:33px;margin-top:30%;margin-left:20%;background-color:#640bff;border:double;padding:5px;border-radius: 10px;color:#fff;display:none;white-space:nowrap">
+<input id="adressText" type="text" list="IPAdress" style="width:240px" value="133.68.112.">
+<datalist id="IPAdress">
+<option value="133.68.112."></option>
+</datalist>
+<input type="button" value="OK" style="margin-left:0px" onclick="connect()">
+</div>
+</body>
+<script src="./skillAnimation.js"></script>
+<script src="./skillList.js"></script>
+<script src="./skillRange.js"></script>
+<script src="./skillSupport.js"></script>
+<script src="./feild/Card.js"></script>
+<script src="./feild/Feild.js"></script>
+<script src="./delay.js"></script>
+<script src="./attack.js"></script>
+<script src="./move.js"></script>
+<!-- <script src="./Chara.js"></script> -->
+<script src="../charaData/charaData.js"></script>
+<script src="../charaData/funnelData.js"></script>
+<script src="./display.js"></script>
+<script src="./AI.js"></script>
+
+<!-- キャラクター -->
+<script src="../charaData/Chara.js"></script>
+<script src="../charaData/charaData/Varukiri.js"></script>
+<script src="../charaData/charaData/Ransurotto.js"></script>
+<script src="../charaData/charaData/Ookuninusi.js"></script>
+<script src="../charaData/charaData/Sirufe.js"></script>
+<script src="../charaData/charaData/Fabuniru.js"></script>
+<script src="../charaData/charaData/Munin.js"></script>
+<script src="../charaData/charaData/Zero.js"></script>
+<script src="../charaData/charaData/Pathi.js"></script>
+<script src="../charaData/charaData/Rozetta.js"></script>
+<script src="../charaData/charaData/Gabera.js"></script>
+<script src="../charaData/charaData/Guren.js"></script>
+<script src="../charaData/charaData/Fureiya.js"></script>
+<script src="../charaData/charaData/Gureisu.js"></script>
+<script src="../charaData/charaData/Seren.js"></script>
+<script src="../charaData/charaData/Zawin.js"></script>
+<script src="../charaData/charaData/Hirudo.js"></script>
+<script src="../charaData/charaData/Rumi.js"></script>
+<script src="../charaData/charaData/akurahairu.js"></script>
+<script src="../charaData/charaData/teresa.js"></script>
+<script src="../charaData/charaData/Garumu.js"></script>
+<script src="../charaData/CharaList.js"></script>
+
+<!-- トークン -->
+<script src="../charaData/Token.js"></script>
+<script src="../charaData/tokenData/Zonbi.js"></script>
+<script src="../charaData/tokenData/Gosuto.js"></script>
+<script src="../charaData/tokenData/Satan.js"></script>
+<script src="../charaData/tokenData/Goremu.js"></script>
+<script src="../charaData/TokenList.js"></script>
+
+<!-- 敵キャラ -->
+<script src="../charaData/Enemy.js"></script>
+<script src="../charaData/enemyData/Undhine.js"></script>
+<script src="../charaData/enemyData/Rezard.js"></script>
+<script src="../charaData/enemyData/Hirezard.js"></script>
+<script src="../charaData/enemyData/Inbiziburu.js"></script>
+<script src="../charaData/enemyData/Yunikon.js"></script>
+<script src="../charaData/enemyData/Kyoukisi.js"></script>
+<script src="../charaData/enemyData/Goburin.js"></script>
+<script src="../charaData/EnemyList.js"></script>
+
+<!-- クエスト -->
+<script src="../quest/Quest.js"></script>
+<script src="../quest/QuestDebug.js"></script>
+<script src="../quest/Quest1.js"></script>
+<script src="../quest/Quest2.js"></script>
+<script src="../quest/Quest3.js"></script>
+<script src="../quest/Quest4.js"></script>
+<script src="../quest/Quest5.js"></script>
+<script src="../quest/Quest6.js"></script>
+<script src="../quest/Quest7.js"></script>
+<script src="../quest/Quest8.js"></script>
+<script src="../quest/Quest9.js"></script>
+<script src="../quest/Quest10.js"></script>
+<script src="../quest/Quest11.js"></script>
+<script src="../quest/Quest12.js"></script>
+<script src="../quest/Quest13.js"></script>
+<script src="../quest/Quest14.js"></script>
+<script src="../quest/Quest15.js"></script>
+<script src="../quest/Quest16.js"></script>
+<script src="../quest/Quest17.js"></script>
+<script src="../quest/Quest18.js"></script>
+<script src="../quest/Quest19.js"></script>
+<script src="../quest/Quest20.js"></script>
+<script src="../quest/Quest21.js"></script>
+<script src="../quest/Quest22.js"></script>
+<script src="../quest/Quest23.js"></script>
+<script src="../quest/QuestList.js"></script>
+
+<!-- データベース -->
+<script src="../database/database.js"></script>
+
+<script src="./battle.js"></script>
+<script src="./communicater.js"></script>
+<script>
+	var tDeck = "";
+	for(var i=0;i<15;i++){
+		tNum = i+1;
+		tDeck+="<img id='Card-"+tNum+"' src='../image/card.png' style='width:50px;height:50px;' onmouseover='displayDeck("+tNum+")' onmouseout='returnDeck()'>";
+		// tDeck+="<img src='../image/"+tCard[1]+".png' style='width:50px;height:50px;position:absolute;margin-left:-57px;margin-top:13px'>";
+		if(tNum==1) {
+			tNum = "A"
+		}
+		else if(tNum==11){
+			tNum = "J"
+		}
+		else if(tNum==12){
+			tNum = "Q"
+		}
+		else if(tNum==13){
+			tNum = "K"
+		}
+		else if(tNum==14){
+			tNum = "JOKER"
+		}
+		else if(tNum==15){
+			tNum = ""
+		}
+		if(tNum=="JOKER")
+			tDeck+="<p style='position:absolute;margin-top:-43px;margin-left:"+(12+i*50-4)+"px;pointer-events:none;font-size:11px'>"+tNum+"</p>";
+		else
+			tDeck+="<p style='position:absolute;margin-top:-43px;margin-left:"+(12+i*50)+"px;pointer-events:none'>"+tNum+"</p>";
+	}
+	$("#deckArea")[0].innerHTML = tDeck;
+</script>
+</html>
