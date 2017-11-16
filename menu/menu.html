@@ -37,6 +37,17 @@
 		border-radius: 10px;
 		font-size: 2em;
 	}
+	.left-modal{
+		width: 30%;
+		height: 100%;
+		position: absolute;
+		top: 0;
+		left: 0;
+		background-color: rgba(255,255,255,0.1);
+		z-index: 1;
+		border-radius: 10px;
+		display: none;
+	}
 	.menu-right{
 		width: 69.5%;
 		height: 100%;
@@ -47,9 +58,24 @@
 		border-radius: 10px;
 		position: absolute;
 	}
+	.right-modal{
+		width: 69.5%;
+		height: 100%;
+		position: absolute;
+		top: 0;
+		left: 30%;
+		z-index: 1;
+		border-radius: 10px;
+		display: block;
+	}
 
 	.menu-list ,.inner-right{
 		margin: 30px 40px 30px 40px;
+		overflow: scroll;
+	}
+
+	::-webkit-scrollbar{
+		width: 0px;
 	}
 
 	#templete{
@@ -60,13 +86,11 @@
 	}
 
 	.pop-up-menu{
-		display: none;
 		background-color:#640bff;
 		border:double;
 		border-radius: 10px;
 		font-size: 2em;
 		position: absolute;
-		z-index: 1;
 		color:#fff;
 	}
 </style>
@@ -79,14 +103,14 @@
 	<div class="menu-list">
 		<div class="pop-up-tactics-list" id="pop-up-tactics-list-order">隊列</div>
 		<div class="pop-up-tactics-list" id="pop-up-tactics-list-formation">陣形</div>
-		<div class="pop-up-tactics-list" id="pop-up-return" onclick="popUpReturn()">消す</div>
+		<div class="pop-up-tactics-list" id="pop-up-return" onclick="popUpReturn()">戻る</div>
 	</div>
 </div>
-<div id="pop-up-menu-tactics">
+<div id="pop-up-menu-deck">
 	<div class="menu-list">
-		<div class="pop-up-tactics-list" id="pop-up-tactics-list-order">隊列</div>
-		<div class="pop-up-tactics-list" id="pop-up-tactics-list-formation">陣形</div>
-		<div class="pop-up-tactics-list" id="pop-up-return" onclick="popUpReturn()">消す</div>
+		<div class="pop-up-deck-list" id="pop-up-deck-list-order">編集</div>
+		<div class="pop-up-deck-list" id="pop-up-deck-list-formation">一覧</div>
+		<div class="pop-up-deck-list" id="pop-up-return" onclick="popUpReturn()">戻る</div>
 	</div>
 </div>
 <body>
@@ -109,8 +133,8 @@
 		<div class="menu-left">
 			<div class="menu-list">
 				<div class="main-list" id="main-list-item" onclick="changeWindow('item')">アイテム</div>
-				<div class="main-list" id="main-list-member">メンバー</div>
-				<div class="main-list" id="main-list-deck">デッキ</div>
+				<div class="main-list" id="main-list-member" onclick="selectRight()">メンバー</div>
+				<div class="main-list" id="main-list-deck" onclick="popUpMenu('deck','main-list-deck')">デッキ</div>
 				<div class="main-list" id="main-list-tactics" onclick="popUpMenu('tactics','main-list-tactics')">作戦</div>
 				<div class="main-list" id="main-list-training">育成</div>
 				<div class="main-list" id="main-list-map">マップ</div>
@@ -141,7 +165,11 @@
 			
 		</div>
 	</div>
+	<div class="left-modal" onclick="selectLeft()"></div>
+	<div class="right-modal"></div>
+	<div class="pop-up-window" style="position: absolute;top: 0;left: 0;width: 100%;height: 100%;display: none;background-color: rgba(255,255,255,0.1);">
 	<div class="pop-up-menu"></div>
+	</div>
 </body>
 <script>
 	//お金とエレメントの表示
@@ -151,11 +179,31 @@
 	//選択時にcss変更
 	$(function(){
 		$(".menu-list div").hover(function(){
-			$(this).css("margin-left","20px");
+			$(this).css("padding-left","20px");
 		},function(){
-			$(this).css("margin-left","0px");
+			$(this).css("padding-left","0px");
 		})
 	})
+
+	//キャラ表示
+	var charaTable = $("<table style='width:100%'>");
+	var tr = $("<tr>");
+	tr.append("<td rowspan='4'>画像</td>");
+	tr.append("<td colspan='2'>名前</td>");
+	charaTable.append(tr);
+	tr = $("<tr>");
+	tr.append("<td>レベル</td>");
+	tr.append("<td>職業</td>");
+	charaTable.append(tr);
+	tr = $("<tr>");
+	tr.append("<td>HP</td>");
+	tr.append("<td>MP</td>");
+	charaTable.append(tr);
+	tr = $("<tr>");
+	tr.append("<td>HPゲージ</td>");
+	tr.append("<td>MPゲージ</td>");
+	charaTable.append(tr);
+	$("#main-member")[0].append(charaTable[0]);
 
 	//画面遷移
 	function changeWindow(windowName) {
@@ -166,22 +214,33 @@
 	//ポップアップ表示
 	function popUpMenu(popUpName,thisId){
 		var top = $("#"+thisId).offset().top;
-		$(".pop-up-menu").css("display","block")
+		$(".pop-up-window").css("display","block")
 		$(".pop-up-menu").css("top",top+"px")
 		$(".pop-up-menu").css("left","200px")
 		$(".pop-up-menu")[0].innerHTML="";
 		$(".pop-up-menu")[0].append($("#pop-up-menu-"+popUpName)[0].cloneNode(true));
 		$(function(){
 			$(".menu-list div").hover(function(){
-				$(this).css("margin-left","20px");
+				$(this).css("padding-left","20px");
 			},function(){
-				$(this).css("margin-left","0px");
+				$(this).css("padding-left","0px");
 			})
-	})
+		})
 	}
 	//ポップアップ削除
 	function popUpReturn(){
-		$(".pop-up-menu").css("display","none")
+		$(".pop-up-window").css("display","none")
+	}
+
+	//操作領域を右に移す
+	function selectRight(){
+		$(".left-modal").css("display","block");
+		$(".right-modal").css("display","none");
+	}
+	//操作領域を左に戻す
+	function selectLeft(){
+		$(".left-modal").css("display","none");
+		$(".right-modal").css("display","block");
 	}
 
 </script>
