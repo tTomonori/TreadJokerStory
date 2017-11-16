@@ -6,6 +6,13 @@
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>menu</title>
 </head>
+<script>
+	// You can also require other files to run in this process
+	require('../renderer.js')
+	const $=require("jquery");
+	const electron=require("electron");
+	const ipc=electron.ipcRenderer;
+</script>
 <style>
 	body{
 		margin: 0px;
@@ -28,6 +35,7 @@
 		background-color:#640bff;
 		border:double;
 		border-radius: 10px;
+		font-size: 2em;
 	}
 	.menu-right{
 		width: 69.5%;
@@ -39,12 +47,142 @@
 		border-radius: 10px;
 		position: absolute;
 	}
-</style>
-<body>
-	<div class="menu-window" id="main-menu">
-		<div class="menu-left"></div>
-		<div class="menu-right"></div>
-	</div>
-</body>
 
+	.menu-list ,.inner-right{
+		margin: 30px 40px 30px 40px;
+	}
+
+	#templete{
+		position: absolute;
+		bottom: 0;
+		width: 30%;
+		text-align: center;
+	}
+
+	.pop-up-menu{
+		display: none;
+		background-color:#640bff;
+		border:double;
+		border-radius: 10px;
+		font-size: 2em;
+		position: absolute;
+		z-index: 1;
+		color:#fff;
+	}
+</style>
+<div id=templete>
+	<hr>
+	お金<br>
+	エレメント
+</div>
+<div id="pop-up-menu-tactics">
+	<div class="menu-list">
+		<div class="pop-up-tactics-list" id="pop-up-tactics-list-order">隊列</div>
+		<div class="pop-up-tactics-list" id="pop-up-tactics-list-formation">陣形</div>
+		<div class="pop-up-tactics-list" id="pop-up-return" onclick="popUpReturn()">消す</div>
+	</div>
+</div>
+<div id="pop-up-menu-tactics">
+	<div class="menu-list">
+		<div class="pop-up-tactics-list" id="pop-up-tactics-list-order">隊列</div>
+		<div class="pop-up-tactics-list" id="pop-up-tactics-list-formation">陣形</div>
+		<div class="pop-up-tactics-list" id="pop-up-return" onclick="popUpReturn()">消す</div>
+	</div>
+</div>
+<body>
+<!-- 	テンプレート
+	<div class="menu-window" id="" style="display:none">
+		<div class="menu-left">
+			<div class="menu-list">
+				<div class="" id=""></div>
+				<div class="" id="return" onclick="changeWindow('main')">戻る</div>
+			</div>
+		</div>
+		<div class="menu-right">
+			<div class="inner-right">
+			</div>
+		</div>
+	</div>
+ -->
+
+	<div class="menu-window" id="main-menu" style="display: block">
+		<div class="menu-left">
+			<div class="menu-list">
+				<div class="main-list" id="main-list-item" onclick="changeWindow('item')">アイテム</div>
+				<div class="main-list" id="main-list-member">メンバー</div>
+				<div class="main-list" id="main-list-deck">デッキ</div>
+				<div class="main-list" id="main-list-tactics" onclick="popUpMenu('tactics','main-list-tactics')">作戦</div>
+				<div class="main-list" id="main-list-training">育成</div>
+				<div class="main-list" id="main-list-map">マップ</div>
+				<div class="main-list" id="main-list-option">設定</div>
+			</div>
+		</div>
+		<div class="menu-right">
+			<div class="inner-right">
+				<div id="member-list">
+					<h1>Main</h1>
+					<div class="member-status" id="main-member"></div>
+					<hr>
+					<h1>Sub</h1>
+					<div class="member-status" id="sub-member"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="menu-window" id="item-menu" style="display: none">
+		<div class="menu-left">
+			<div class="menu-list">
+				<div class="item-list" id="consumption">消費</div>
+				<div class="item-list" id="important">大事な物</div>
+				<div class="item-list" id="return" onclick="changeWindow('main')">戻る</div>
+			</div>
+		</div>
+		<div class="menu-right">
+			
+		</div>
+	</div>
+	<div class="pop-up-menu"></div>
+</body>
+<script>
+	//お金とエレメントの表示
+	for(var i=0;i<$(".menu-left").length;i++){
+		$(".menu-left")[i].append($("#templete")[0].cloneNode(true));
+	}
+	//選択時にcss変更
+	$(function(){
+		$(".menu-list div").hover(function(){
+			$(this).css("margin-left","20px");
+		},function(){
+			$(this).css("margin-left","0px");
+		})
+	})
+
+	//画面遷移
+	function changeWindow(windowName) {
+		$(".menu-window").css("display","none");
+		$("#"+windowName+"-menu").css("display","block");
+		popUpReturn();
+	}
+	//ポップアップ表示
+	function popUpMenu(popUpName,thisId){
+		var top = $("#"+thisId).offset().top;
+		$(".pop-up-menu").css("display","block")
+		$(".pop-up-menu").css("top",top+"px")
+		$(".pop-up-menu").css("left","200px")
+		$(".pop-up-menu")[0].innerHTML="";
+		$(".pop-up-menu")[0].append($("#pop-up-menu-"+popUpName)[0].cloneNode(true));
+		$(function(){
+			$(".menu-list div").hover(function(){
+				$(this).css("margin-left","20px");
+			},function(){
+				$(this).css("margin-left","0px");
+			})
+	})
+	}
+	//ポップアップ削除
+	function popUpReturn(){
+		$(".pop-up-menu").css("display","none")
+	}
+
+</script>
 </html>
