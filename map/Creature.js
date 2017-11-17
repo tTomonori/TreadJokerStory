@@ -109,11 +109,16 @@ class Creature{
 			this.turn(aDirection.directionName);
 			this.appendToMas();
 			this.moveFlag=false;
+			this.moveEnd();
 		})
 		//画像変更アニメーション
 		for(let i=0;i<aComa.length;i++){
 			setTimeout(()=>{this.setImage(aComa[i][0],aComa[i][1])},i*100)
 		}
+	}
+	//移動終了時に呼ばれる
+	moveEnd(){
+
 	}
 	appendToMas(){
 		let tMas=Map.getMas(this.x,this.y);

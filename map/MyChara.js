@@ -6,6 +6,12 @@ class MyChara extends Creature{
 		tMap.style.marginTop=aY*mMasSize+350-mMasSize+"px";
 		tMap.style.marginLeft=aX*mMasSize+500-mMasSize+"px";
 	}
+	//移動終了時にキー入力状態を見て,即次の移動
+	moveEnd(){
+		let tDownMoveKey=KeyMonitor.getDownMoveKey();
+		if(tDownMoveKey.length<=0)return;
+		this.move(tDownMoveKey[0]);
+	}
 	//正面のマスに話かける
 	speakTo(){
 		let tMas;
