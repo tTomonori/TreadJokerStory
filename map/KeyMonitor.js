@@ -16,11 +16,14 @@ class KeyMonitor{
 		tFrame.style.display="block";
 		tFrame.src="../menu/menu.html";
 		tFrame.focus();
-		window.addEventListener('menuClose', function(event) {
+		this.closeFrame=()=>{
 			tFrame.style.display="none";
 			tFrame.src="";
 			this.setMapPage();
 			window.focus();
-		}, false);
+		}
+	}
+	static closeFrame(){
+
 	}
 }

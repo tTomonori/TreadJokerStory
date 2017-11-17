@@ -34,3 +34,6 @@ PreImage.preLoadMapChip(mMapData,()=>{
 	mMyChara=new MyChara(0,0,"5_field/1345010501")
 	KeyMonitor.setMapPage();
 })
+window.addEventListener('message', function(event,aMessage) {
+	KeyMonitor.closeFrame();
+}, false);
