@@ -8,8 +8,11 @@ class KeyMonitor{
 			if(e.keyCode==40)mMyChara.move("down");
 			//メニュー
 			if(e.keyCode==88)this.displayMenu();
+			//話かける
+			if(e.keyCode==90)mMyChara.speakTo();
 		})
 	}
+	//メニューを開く
 	static displayMenu(){
 		$(window).off();
 		let tFrame=document.getElementById("frame");
@@ -23,6 +26,17 @@ class KeyMonitor{
 			window.focus();
 		}
 	}
+	//ユーザからの応答待ち
+	static waitKey(aCallBack){
+		$(window).keydown((e)=>{
+			if(e.keyCode==90)aCallBack();
+		})
+	}
+	//キー入力監視ストップ
+	static stop(){
+		$(window).off();
+	}
+	//iframeを閉じる時に実行(他のメソッドで上書きする)
 	static closeFrame(){
 
 	}

@@ -1,6 +1,7 @@
 class Map{
 	static setMap(aMap){
 		this.map=new Array();
+		this.creature=new Array();
 		//マスセット
 		let tMap=document.getElementById("map");
 		tMap.textContent="";
@@ -17,7 +18,10 @@ class Map{
 		//npcとかセット
 		this.creatures=new Array();
 		for(let tCreature of aMap.creatures){
-
+			let tClass;
+			if(tCreature.creature=="npc") tClass=Npc;
+			else if(tCreature.creature=="thing") tClass=Thing;
+			this.creature.push(new tClass(tCreature));
 		}
 	}
 	static getMas(aX,aY){
