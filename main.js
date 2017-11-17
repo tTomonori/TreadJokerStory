@@ -37,7 +37,8 @@ function createWindow () {
   // mMainWindow.loadURL("file://"+__dirname+'/battle/battle.html?chara='+[0,'T',1,'T']+'&num='+(-1));
 
   // スタート画面
-  mMainWindow.loadURL("file://"+__dirname+'/menu/menu.html');
+  mMainWindow.loadURL("file://"+__dirname+'/map/mapFeild.html');
+  // mMainWindow.loadURL("file://"+__dirname+'/menu/menu.html');
 
 
   // Open the DevTools.

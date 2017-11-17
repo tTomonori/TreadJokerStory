@@ -6,15 +6,29 @@
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>Document</title>
 </head>
-<body>
+<script>
+require('../renderer.js')
+const $=require("jquery");
+const electron=require("electron");
+const ipc=electron.ipcRenderer;
+</script>
+<style>
+img{
+	image-rendering:pixelated;
+}
+</style>
+<body style="overflow:hidden">
+<div id="map" style="line-height:0em;overflow:hidden;position:fixed;white-space:nowrap;">
 
+</div>
 </body>
-<script src="./Creatuer.js"></script>
+<script src="./PreImage.js"></script>
+<script src="./Creature.js"></script>
 <script src="./Map.js"></script>
 <script src="./Mas.js"></script>
 <script src="./MyChara.js"></script>
 <script src="./Npc.js"></script>
-<script src="./Object.js"></script>
+<script src="./Thing.js"></script>
 
 <script src="./mapFeild.js"></script>
 </html>
