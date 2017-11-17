@@ -146,6 +146,7 @@
 				<div class="main-list" id="main-list-training">育成</div>
 				<div class="main-list" id="main-list-map">マップ</div>
 				<div class="main-list" id="main-list-option">設定</div>
+				<div class="main-list" id="main-list-end" onclick="endMenu()">閉じる</div>
 			</div>
 		</div>
 		<div class="menu-right">
@@ -336,7 +337,9 @@
 				default:
 					break;
 			}
-
+		}
+		else if(e.keyCode==88){//x
+			endMenu();
 		}
 		else if(e.keyCode==13){//Enter
 			if(selectedList()!=null){
@@ -356,6 +359,11 @@
 		else if(operation=="down") Pointer=(Pointer+1)%list.length;
 		else if(operation=="up") Pointer=(Pointer+list.length-1)%list.length;
 		$(selectedList()).css("padding-left","20px");
+	}
+
+	//終了メッセージを送る
+	function endMenu(){
+		window.parent.postMessage("menuClose", "*");
 	}
 
 </script>
