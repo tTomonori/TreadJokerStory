@@ -94,6 +94,7 @@
 		color:#fff;
 	}
 </style>
+<!-- そのまま使用するテンプレート -->
 <div id=templete>
 	<hr>
 	お金<br>
@@ -113,21 +114,27 @@
 		<div class="pop-up-deck-list" id="pop-up-return" onclick="popUpReturn()">戻る</div>
 	</div>
 </div>
-<body>
-<!-- 	テンプレート
-	<div class="menu-window" id="" style="display:none">
-		<div class="menu-left">
-			<div class="menu-list">
-				<div class="" id=""></div>
-				<div class="" id="return" onclick="changeWindow('main')">戻る</div>
-			</div>
-		</div>
-		<div class="menu-right">
-			<div class="inner-right">
-			</div>
+
+<!-- コピー用テンプレート -->
+<!-- <div class="menu-window" id="" style="display:none">
+	<div class="menu-left">
+		間に何も入れない
+		<div class="menu-list">
+			<div class="" id=""></div>
+			<div class="" id="return" onclick="changeWindow('main')">戻る</div>
 		</div>
 	</div>
- -->
+	<div class="menu-right">
+		間に何も入れない
+		<div class="inner-right">
+			<div>が選択肢になる
+			<div class=""></div>
+			<div class=""></div>
+			<div class=""><div id="noSelect">選択肢にならないもの</div></div>
+		</div>
+	</div>
+</div> -->
+<body>
 
 	<div class="menu-window" id="main-menu" style="display: block">
 		<div class="menu-left">
@@ -172,6 +179,8 @@
 	</div>
 </body>
 <script>
+	var Pointer = -1;
+
 	//お金とエレメントの表示
 	for(var i=0;i<$(".menu-left").length;i++){
 		$(".menu-left")[i].append($("#templete")[0].cloneNode(true));
@@ -210,6 +219,7 @@
 		$(".menu-window").css("display","none");
 		$("#"+windowName+"-menu").css("display","block");
 		popUpReturn();
+		Pointer = -1;
 	}
 	//ポップアップ表示
 	function popUpMenu(popUpName,thisId){
@@ -219,9 +229,11 @@
 		$(".pop-up-menu").css("left","200px")
 		$(".pop-up-menu")[0].innerHTML="";
 		$(".pop-up-menu")[0].append($("#pop-up-menu-"+popUpName)[0].cloneNode(true));
+		Pointer=-1;
 		$(function(){
 			$(".menu-list div").hover(function(){
 				$(this).css("padding-left","20px");
+				Pointer = -1;
 			},function(){
 				$(this).css("padding-left","0px");
 			})
@@ -230,17 +242,121 @@
 	//ポップアップ削除
 	function popUpReturn(){
 		$(".pop-up-window").css("display","none")
+		Pointer = -1;
 	}
 
 	//操作領域を右に移す
 	function selectRight(){
 		$(".left-modal").css("display","block");
 		$(".right-modal").css("display","none");
+		Pointer = -1;
 	}
 	//操作領域を左に戻す
 	function selectLeft(){
 		$(".left-modal").css("display","none");
 		$(".right-modal").css("display","block");
+		Pointer = -1;
+	}
+
+	//操作領域を返す関数
+	function operateArea(){
+		if($(".pop-up-window")[0].style.display=="block"){
+			return "pop-up";
+		}
+		else if($(".left-modal")[0].style.display=="block"){
+			return "right";
+		}
+		else{
+			return "left";
+		}
+	}
+
+	var selectList = $("<div>");
+	function operateList(){//操作しているリストを返す
+		if(Pointer == -1){
+			if(operateArea()=="pop-up"){
+				selectList = $(".pop-up-window")[0];//pop-up-window
+				selectList = selectList.children[0];//pop-up-menu
+				selectList = selectList.children[0];//pop-up-menu-??
+			}
+			else{
+				for(var i=0;i<$(".menu-window").length;i++){
+					if($(".menu-window")[i].style.display=="block")	{
+						selectList = $(".menu-window")[i];
+						break;				
+					}
+				}
+				if(operateArea()=="right"){
+					selectList = selectList.children[1];//右
+					selectList = selectList.children[0];//innerがあるため
+				}
+				else{
+					selectList = selectList.children[0];//左
+				}
+			}
+			selectList = selectList.children[0];//リストまで下がる
+			selectList = $(selectList).children("div");//リストの配列
+			var tempList = new Array();
+			for (var i = 0; i < selectList.length; i++) {
+				if($(selectList[i]).children("#unselectable").length<1){
+					tempList.push(selectList[i]);
+				}
+			}
+			selectList=tempList;
+		}
+		return selectList;
+	}
+
+	//選択している要素を返す
+	function selectedList(){
+		if(Pointer==-1) return null;
+		return operateList()[Pointer];
+	}
+
+
+	//キーボード操作
+	$(window).keydown(function(e){
+		if(e.keyCode==38){//↑
+			selectPointer("up");
+		}
+		else if(e.keyCode==40){//↓
+			selectPointer("down");
+		}
+		else if(e.keyCode==8){//backspace
+			switch (operateArea()){
+				case "pop-up":
+					popUpReturn();
+					break;
+				case "left":
+					changeWindow("main");
+					break;
+				case "right":
+					selectLeft();
+					break
+				default:
+					break;
+			}
+
+		}
+		else if(e.keyCode==13){//Enter
+			if(selectedList()!=null){
+				selectedList().onclick();
+			}
+		}
+		else{
+			console.log("エラー：割り当てられてないキー操作","keyCode:"+e.keyCode);
+		}
+	})
+	function selectPointer(operation){
+		var list=operateList();		
+		console.log(operateList());
+		for(var i=0;i<list.length;i++){
+			$(list[i]).css("padding-left","0px");
+		}
+		if(Pointer==-1) Pointer=0;
+		else if(operation=="down") Pointer=(Pointer+1)%list.length;
+		else if(operation=="up") Pointer=(Pointer+list.length-1)%list.length;
+		$(selectedList()).css("padding-left","20px");
 	}
 
 </script>
