@@ -6,12 +6,12 @@
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>menu</title>
 </head>
+<script src="./jquery-3.2.1.min.js"></script>
 <script>
 	// You can also require other files to run in this process
-	require('../renderer.js')
-	const $=require("jquery");
-	const electron=require("electron");
-	const ipc=electron.ipcRenderer;
+	// require('../renderer.js')
+	// const electron=require("electron");
+	// const ipc=electron.ipcRenderer;
 </script>
 <style>
 	body{
@@ -169,7 +169,7 @@
 			</div>
 		</div>
 		<div class="menu-right">
-			
+
 		</div>
 	</div>
 	<div class="left-modal" onclick="selectLeft()"></div>
@@ -283,7 +283,7 @@
 				for(var i=0;i<$(".menu-window").length;i++){
 					if($(".menu-window")[i].style.display=="block")	{
 						selectList = $(".menu-window")[i];
-						break;				
+						break;
 					}
 				}
 				if(operateArea()=="right"){
@@ -348,7 +348,7 @@
 		}
 	})
 	function selectPointer(operation){
-		var list=operateList();	
+		var list=operateList();
 		for(var i=0;i<list.length;i++){
 			$(list[i]).css("padding-left","0px");
 		}

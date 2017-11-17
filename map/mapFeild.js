@@ -32,14 +32,5 @@ var mMyChara;
 PreImage.preLoadMapChip(mMapData,()=>{
 	Map.setMap(mMapData)
 	mMyChara=new MyChara(0,0,"5_field/1345010501")
-	setKeyMonitor();
+	KeyMonitor.setMapPage();
 })
-//キー入力監視
-function setKeyMonitor(){
-	$(window).keydown((e)=>{
-		if(e.keyCode==37)mMyChara.move("left");
-		if(e.keyCode==38)mMyChara.move("up");
-		if(e.keyCode==39)mMyChara.move("right");
-		if(e.keyCode==40)mMyChara.move("down");
-	})
-}
