@@ -3,8 +3,8 @@ class MyChara extends Creature{
 		super(aX,aY,"../image/map/"+aImage+".png",3);
 		//マップ表示位置調整
 		let tMap=document.getElementById("map");
-		tMap.style.marginTop=aY*mMasSize+350-mMasSize+"px";
-		tMap.style.marginLeft=aX*mMasSize+500-mMasSize+"px";
+		tMap.style.marginTop=-aY*mMasSize+350-mMasSize+"px";
+		tMap.style.marginLeft=-aX*mMasSize+500-mMasSize+"px";
 	}
 	//移動終了時にキー入力状態を見て,即次の移動
 	moveEnd(){

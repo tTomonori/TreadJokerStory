@@ -61,7 +61,7 @@ let mMapData={
 var mMyChara;
 PreImage.preLoadMapChip(mMapData,()=>{
 	Map.setMap(mMapData)
-	mMyChara=new MyChara(0,0,"5_field/1345010501")
+	mMyChara=new MyChara(3,3,"5_field/1345010501")
 	KeyMonitor.setMapPage();
 })
 window.addEventListener('message', function(event,aMessage) {
