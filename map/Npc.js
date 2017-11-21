@@ -1,13 +1,16 @@
 class Npc extends Creature{
 	constructor(aData){
-		super(aData.position.x,aData.position.y,"../image/map/キャラチップ/"+aData.image+".png",2);
+		super(aData,"../image/map/キャラチップ/"+aData.image+".png");
 		if(aData.direction!=undefined)this.turn(aData.direction);
 		if(aData.speak!=undefined){
 			this.speaked=()=>{
+				//キー入力監視ストップ
 				KeyMonitor.stop();
-				aData.speak(this).then(()=>{
+				//イベント実行
+				Event.operateEventList(aData.speak,this).then(()=>{
+					//イベント終了時
 					KeyMonitor.setMapPage();
-				});
+				})
 			}
 		}
 	}

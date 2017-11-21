@@ -1,32 +1,27 @@
-var db;
-// var NeDB=require("nedb")
-var NeDB=require(__dirname+"/../node_modules/nedb")
-
-//ファイルを開く
-//パッケージ化の時用
-// loadDB(__dirname+"/../../../../../savedata/questData.db")
-//開発中の時用
-loadDB(__dirname+"/../savedata/questData.db")
-function loadDB(aFilePath){
-	let fileName=aFilePath;
-	db=new NeDB({
-		filename:fileName,
-		autoload:true
-	})
-}
-
-//引数の番号のクエストがクリア済みならCallBackの引数にtrue
-function isQuestCrelar(aNum,aCallBack){
-	db.find({Data:"quest",Num:aNum},(err,doc)=>{
-		let tIsClear;
-		if(doc.length==0) tIsClear=false;
-		else{
-			if(doc[0].Value=="clear") tIsClear=true;
-		}
-		aCallBack(tIsClear)
-	})
-}
-//引数の番号のクエストをクリアしたことをセーブ
-function saveQuestClear(aNum){
-	db.insert({Data:"quest",Num:aNum,Value:"clear",_id:"q"+aNum})
+class Database{
+	static loadSaveData(aCallBack){
+		this.NeDB=require(__dirname+"/../node_modules/nedb");
+		let fileName=__dirname+"/../savedata/savedata.db";
+		db=new NeDB({
+			filename:fileName,
+			autoload:true
+		})
+		let tData=["item","member","order","formation","skill","element","orb","meny","option","position","flag"];
+		let tLoadData=((i)=>{
+			if(i<tData.length){
+				this.loadData(tData[i],()=>{
+					tLoadData(i+1);
+				})
+			}
+			else{
+				aCallBack();
+			}
+		})
+	}
+	static loadData(aProperty,aCallBack){
+		db.find({data:aProperty},(err,doc)=>{
+			this[aProperty]=doc[0].value;
+			aCallBack();
+		})
+	}
 }
