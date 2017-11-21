@@ -113,5 +113,5 @@ Database.loadSaveData(()=>{
 	}, false);
 });
 function getDatabase(){
-	return Database;
+	return SaveDatabase;
 }
