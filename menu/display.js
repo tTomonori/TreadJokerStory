@@ -1,5 +1,6 @@
 	//キャラ表示
-	for (var i = 0; i < 5; i++) {
+	var AllCharaNum = 5
+	for (var i = 0; i < AllCharaNum; i++) {
 
 		var charaTable = $("<table style='width:100%'>");
 		var tr = $("<tr>");
@@ -21,9 +22,27 @@
 		var div = $("<div>");
 		div.append(charaTable);
 		//divにonclickを設定
-		// div.onclick="";
-
+		div[0].onclick=setDisplayCharaDetail(i);
 		changeCss($(div));
 		if(i<3) $("#main-member")[0].append(div[0]);
 		else $("#sub-member")[0].append(div[0]);
+	}
+
+	var displayCharaNum = 0;
+	function setDisplayCharaDetail(charaNum){
+		return function(){
+			displayCharaNum=charaNum;
+			displayCharaDetail();
+		}
+	}
+	function displayCharaDetail(){
+			$("#charaName")[0].innerHTML = displayCharaNum+"番目のキャラ";
+			displayPopUp('chara',0,0);
+	}
+
+
+	function changeCharaDetail(operation){
+		if(operation=="right") displayCharaNum=(displayCharaNum+1)%AllCharaNum;
+		else if(operation=="left") displayCharaNum=(displayCharaNum+AllCharaNum-1)%AllCharaNum;
+		displayCharaDetail();
 	}

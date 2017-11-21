@@ -51,6 +51,7 @@
 		$(".pop-up-menu").css("left",left+"px")
 		$(".pop-up-menu")[0].innerHTML="";
 		$(".pop-up-menu")[0].append($("#pop-up-menu-"+popUpName)[0].cloneNode(true));
+		Pointer = -1;
 	}
 	//ポップアップ削除
 	function popUpReturn(){
@@ -88,26 +89,7 @@
 	var selectList = $("<div>");
 	function operateList(){//操作しているリストを返す
 		if(Pointer == -1){
-			if(operateArea()=="pop-up"){
-				selectList = $(".pop-up-window")[0];//pop-up-window
-				selectList = selectList.children[0];//pop-up-menu
-				selectList = selectList.children[0];//pop-up-menu-??
-			}
-			else{
-				for(var i=0;i<$(".menu-window").length;i++){
-					if($(".menu-window")[i].style.display=="block")	{
-						selectList = $(".menu-window")[i];
-						break;
-					}
-				}
-				if(operateArea()=="right"){
-					selectList = selectList.children[1];//右
-				}
-				else{
-					selectList = selectList.children[0];//左
-				}
-			}
-			selectList = selectList.children[0];//リストまで下がる
+			selectList = operateDom();
 			selectList = $(selectList).children("div");//リストの配列
 			var tempList = new Array();
 			for (var i = 0; i < selectList.length; i++) {
@@ -116,6 +98,31 @@
 			selectList=tempList;
 		}
 		return selectList;
+	}
+
+	function operateDom(){
+		var list;
+			if(operateArea()=="pop-up"){
+				list = $(".pop-up-window")[0];//pop-up-window
+				list = list.children[0];//pop-up-menu
+				list = list.children[0];//pop-up-menu-??
+			}
+			else{
+				for(var i=0;i<$(".menu-window").length;i++){
+					if($(".menu-window")[i].style.display=="block")	{
+						list = $(".menu-window")[i];
+						break;
+					}
+				}
+				if(operateArea()=="right"){
+					list = list.children[1];//右
+				}
+				else{
+					list = list.children[0];//左
+				}
+			}
+			list = list.children[0];//リストまで下がる
+		 return list;
 	}
 
 	function listPush(list,div){
@@ -155,6 +162,9 @@
 		else if(e.keyCode==40){//↓
 			selectPointer("down");
 		}
+		else if(e.keyCode==88){//x
+			endMenu();
+		}
 		else if(e.keyCode==8){//backspace
 			switch (operateArea()){
 				case "pop-up":
@@ -170,9 +180,6 @@
 					break;
 			}
 		}
-		else if(e.keyCode==88){//x
-			endMenu();
-		}
 		else if(e.keyCode==13){//Enter
 			if(selectedList()!=null){
 				if(selectedList().onclick==null){
@@ -182,6 +189,19 @@
 				selectedList().onclick();
 			}
 		}
+		else if(e.keyCode==39){//→
+			if(operateDom().id=="charaDetail"){
+				changeCharaDetail("right");
+			}
+		}
+		else if(e.keyCode==37){//←
+			if(operateDom().id=="charaDetail"){
+				changeCharaDetail("left");
+			}	
+		}
+		// else if(e.keyCode==){
+
+		// }
 		else{
 			console.log("エラー：割り当てられてないキー操作","keyCode:"+e.keyCode);
 		}
@@ -197,6 +217,10 @@
 		}
 		else if(operation=="down") Pointer=(Pointer+1)%list.length;
 		else if(operation=="up") Pointer=(Pointer+list.length-1)%list.length;
+		var t;
+		if(selectedList()==undefined) t = 0;
+		else t = $(selectedList()).offset().top + operateDom().scrollTop-300;
+		$(operateDom()).animate({scrollTop: t},'fast')
 		$(selectedList()).css("padding-left","20px");
 	}
 
