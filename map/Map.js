@@ -21,6 +21,8 @@ class Map{
 			let tClass;
 			if(tCreature.creature=="npc") tClass=Npc;
 			else if(tCreature.creature=="thing") tClass=Thing;
+			else if(tCreature.creature="item") tClass=ItemObject;
+			else if(tCreature.creature="chest") tClass=Chest;
 			this.creature.push(new tClass(tCreature));
 		}
 	}

@@ -30,6 +30,18 @@ class Creature{
 		this.appendToMas();
 		this.moveFlag=false;
 		this.direction="down";//向いている方向
+		//話しかけた時の関数セット
+		if(aData.speak!=undefined){
+			this.speaked=()=>{
+				//キー入力監視ストップ
+				KeyMonitor.stop();
+				//イベント実行
+				Event.operateEventList(aData.speak,this).then(()=>{
+					//イベント終了時
+					KeyMonitor.setMapPage();
+				})
+			}
+		}
 	}
 	//このキャラのidを返す
 	getId(){return this.id};

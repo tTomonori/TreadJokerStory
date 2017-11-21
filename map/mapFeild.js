@@ -84,14 +84,31 @@ let mMapData={
 			{event:"speak",sentence:"上から話しかけると貫通するのは仕様だよ"}
 		]
 	},
+	{
+		creature:"item",
+		item:["きのみ"],
+		position:{x:0,y:3},
+		image:{image:"base",x:5,y:50}
+	},
+	{
+		creature:"chest",
+		item:["薬","武器","防具"],
+		position:{x:0,y:4},
+		image:{
+			close:{image:"base",x:6,y:20},
+			open:{image:"base",x:6,y:21}
+		}
+	}
 ]
 }
 var mMyChara;
-PreImage.preLoadMapChip(mMapData,()=>{
-	Map.setMap(mMapData)
-	mMyChara=Map.createHero(3,3,"5_field/1345010501");
-	KeyMonitor.setMapPage();
-})
-window.addEventListener('message', function(event,aMessage) {
-	KeyMonitor.closeFrame();
-}, false);
+Database.loadSaveData(()=>{
+	PreImage.preLoadMapChip(mMapData,()=>{
+		Map.setMap(mMapData)
+		mMyChara=Map.createHero(3,3,"5_field/1345010501");
+		KeyMonitor.setMapPage();
+	})
+	window.addEventListener('message', function(event,aMessage) {
+		KeyMonitor.closeFrame();
+	}, false);
+});
