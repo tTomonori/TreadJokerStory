@@ -1,5 +1,5 @@
 	var Pointer = -1;
-
+	var mDatabase=window.parent.getDatabase();
 	//お金とエレメントの表示
 	for(var i=0;i<$(".menu-left").length;i++){
 		$(".menu-left")[i].append($("#templete")[0].cloneNode(true));
@@ -197,7 +197,7 @@
 		else if(e.keyCode==37){//←
 			if(operateDom().id=="charaDetail"){
 				changeCharaDetail("left");
-			}	
+			}
 		}
 		// else if(e.keyCode==){
 

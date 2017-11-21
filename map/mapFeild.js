@@ -112,3 +112,6 @@ Database.loadSaveData(()=>{
 		KeyMonitor.closeFrame();
 	}, false);
 });
+function getDatabase(){
+	return Database;
+}
