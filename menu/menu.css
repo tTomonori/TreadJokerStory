@@ -1,0 +1,82 @@
+	body{
+		margin: 0px;
+		overflow: hidden;
+		}
+
+	.menu-window {
+		width: 99.4%;
+		height:99.4%;
+		position:absolute;
+		top: 0;
+		color:#fff;
+	}
+
+	.menu-left{
+		width: 30%;
+		height: 100%;
+		/*float: left;*/
+		display: inline-block;
+		background-color:#640bff;
+		border:double;
+		border-radius: 10px;
+		font-size: 2em;
+	}
+	.left-modal{
+		width: 30%;
+		height: 100%;
+		position: absolute;
+		top: 0;
+		left: 0;
+		background-color: rgba(255,255,255,0.1);
+		z-index: 1;
+		border-radius: 10px;
+		display: none;
+	}
+	.menu-right{
+		width: 69.5%;
+		height: 100%;
+		/*float: right;*/
+		display: inline-block;
+		background-color:#640bff;
+		border:double;
+		border-radius: 10px;
+		position: absolute;
+	}
+	.right-modal{
+		width: 69.5%;
+		height: 100%;
+		position: absolute;
+		top: 0;
+		left: 30%;
+		z-index: 1;
+		border-radius: 10px;
+		display: block;
+	}
+
+	.menu-list ,.inner-right{
+		margin: 5% 40px 0px 40px;
+		overflow: scroll;
+		padding-bottom: 5%;
+		height: 90%;
+	}
+
+
+	::-webkit-scrollbar{
+		width: 0px;
+	}
+
+	#templete{
+		position: absolute;
+		bottom: 0;
+		width: 30%;
+		text-align: center;
+	}
+
+	.pop-up-menu{
+		background-color:#640bff;
+		border:double;
+		border-radius: 10px;
+		font-size: 2em;
+		position: absolute;
+		color:#fff;
+	}
