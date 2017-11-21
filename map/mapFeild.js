@@ -31,37 +31,65 @@ let mMapData={
 		10:{ground:{image:"koori1",x:0,y:4},object:{image:"",x:0,y:0},accessories:{image:"",x:0,y:0},canOn:false}
 	},
 	creatures:[{
+		id:"man",
 		creature:"npc",
 		position:{x:1,y:1},
 		image:"pipo-charachip001",
-		speak:(my)=>{
-			return new Promise((res,rej)=>{
-				my.turnToHero();
-				my.speak("zキーで会話終了です").then(()=>{
-					res();
-				})
-			})
-		}
+		size:2,
+		speak:[
+			{event:"turnToHero"},
+			{event:"speak",sentence:"zキーで会話終了です"}
+		]
 	},
 	{
+		id:"dog",
 		creature:"npc",
 		position:{x:4,y:4},
 		direction:"left",
 		image:"pipo-charachip009b",
-		speak:(my)=>{
-			return new Promise((res,rej)=>{
-				my.turnToHero();
-				my.speak("氷のマスは通れないわん!").then(()=>{
-					res();
-				})
-			})
-		}
-	}]
+		size:2,
+		speak:[
+			{event:"turnToHero"},
+			{event:"speak",sentence:"氷のマスは通れないわん!"},
+			{event:"speak",sentence:"実際に歩いて確かめるといいわん!"},
+			{event:"turn",direction:"left"}
+		]
+	},
+	{
+		id:"woman",
+		creature:"npc",
+		position:{x:3,y:1},
+		image:"pipo-charachip002",
+		size:2,
+		speak:[
+			{event:"turnToHero"},
+			{event:"speak",sentence:"右向け右!"},
+			{event:"turn",direction:"right",target:"hero"},
+			{event:"speak",sentence:"左向け左!"},
+			{event:"turn",direction:"left",target:"hero"},
+			{event:"turn",direction:"down"}
+		]
+	},
+	{
+		id:"5",
+		creature:"npc",
+		position:{x:5,y:1},
+		image:"pipo-charachip003",
+		size:2,
+		speak:[
+			{event:"turnToHero"},
+			{event:"speak",sentence:"強制移動イベントだよ"},
+			{event:"move",directions:["down","down"],target:"hero"},
+			{event:"turnToHero"},
+			{event:"speak",sentence:"上から話しかけると貫通するのは仕様だよ"}
+		]
+	},
+]
 }
 var mMyChara;
 PreImage.preLoadMapChip(mMapData,()=>{
 	Map.setMap(mMapData)
-	mMyChara=new MyChara(3,3,"5_field/1345010501")
+	mMyChara=Map.createHero(3,3,"5_field/1345010501");
 	KeyMonitor.setMapPage();
 })
 window.addEventListener('message', function(event,aMessage) {

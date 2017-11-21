@@ -1,6 +1,6 @@
 class MyChara extends Creature{
 	constructor(aX,aY,aImage){
-		super(aX,aY,"../image/map/"+aImage+".png",3);
+		super({id:"hero",position:{x:aX,y:aY},size:3},"../image/map/"+aImage+".png");
 		//マップ表示位置調整
 		let tMap=document.getElementById("map");
 		tMap.style.marginTop=-aY*mMasSize+350-mMasSize+"px";
@@ -35,11 +35,11 @@ class MyChara extends Creature{
 		tMas.getOnChara().speaked();
 	}
 	//移動時にマップも移動させる
-	moveAnimate(aDirection,aComa,aNextMas){
-		super.moveAnimate(aDirection,aComa,aNextMas);
+	moveHard(aDirectionPosition,aComa,aCallBack){
+		super.moveHard(aDirectionPosition,aComa,aCallBack);
 		$("#map").animate({
-			marginTop:"-="+aDirection.directionPosition[1]*mMasSize+"px",
-			marginLeft:"-="+aDirection.directionPosition[0]*mMasSize+"px"
+			marginTop:"-="+aDirectionPosition[1]*mMasSize+"px",
+			marginLeft:"-="+aDirectionPosition[0]*mMasSize+"px"
 		},300,"linear")
 	}
 }

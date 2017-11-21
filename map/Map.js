@@ -29,4 +29,16 @@ class Map{
 		if(aX<0||this.map[aY].length<=aX)return null;
 		return this.map[aY][aX];
 	}
+	//主人公を作成
+	static createHero(aX,aY,aImage){
+		let tHero=new MyChara(aX,aY,aImage);
+		this.creature.unshift(tHero)
+		return tHero;
+	}
+	static getCreatureById(aId){
+		for(let tCreature of this.creature){
+			if(tCreature.getId()==aId)return tCreature;
+		}
+		return null;
+	}
 }
