@@ -1,4 +1,4 @@
-class Database{
+class SaveDatabase{
 	static loadSaveData(aCallBack){
 		this.NeDB=require(__dirname+"/../node_modules/nedb");
 		let fileName=__dirname+"/../savedata/savedata.db";

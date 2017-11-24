@@ -107,8 +107,8 @@
 	<div class="menu-window" id="item-menu" style="display: none">
 		<div class="menu-left">
 			<div class="menu-list">
-				<div class="item-list" id="consumption">消費</div>
-				<div class="item-list" id="important">大事な物</div>
+				<div class="item-list" id="consumption" onclick="displayConsum()">消費</div>
+				<div class="item-list" id="important" onclick="displayImportant()">大事な物</div>
 				<div class="item-list" id="return" onclick="changeWindow('main')">戻る</div>
 			</div>
 		</div>
@@ -137,8 +137,15 @@
 	<div class="pop-up-menu"></div>
 	</div>
 </body>
+
+<script type="text/javascript" src="../database/CharaDatabase.js"></script>
+<script type="text/javascript" src="../database/ConsumItemDatabase.js"></script>
+<script type="text/javascript" src="../database/ImportantItemDatabase.js"></script>
+
+
 <script type="text/javascript" src="menu.js"></script>
 <script type="text/javascript" src="display.js"></script>
+<script type="text/javascript" src="item.js"></script>
 <script type="text/javascript" src="training.js"></script>
 <script>
 </script>

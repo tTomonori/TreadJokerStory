@@ -1,15 +1,22 @@
 	//キャラ表示
-	var AllCharaNum = 5
+	var allChara = mDatabase.getMember();
+	var AllCharaNum = mDatabase.getOrder().length;
 	for (var i = 0; i < AllCharaNum; i++) {
+		var charaId = mDatabase.getOrder()[i];
+		var charaData = CharaDatabase.getData(charaId);
+		var level = 1;
+		for(let tCrystal in allChara[charaId].crystal){
+			level+=allChara[charaId].crystal[tCrystal];
+		}
 
 		var charaTable = $("<table style='width:100%'>");
 		var tr = $("<tr>");
 		tr.append("<td rowspan='4'>画像</td>");
-		tr.append("<td colspan='2'>名前</td>");
+		tr.append("<td colspan='2'>"+charaData.name+"</td>");
 		charaTable.append(tr);
 		tr = $("<tr>");
-		tr.append("<td>レベル</td>");
-		tr.append("<td>職業</td>");
+		tr.append("<td>"+level+" Lv</td>");
+		tr.append("<td>"+charaData.profession+"</td>");
 		charaTable.append(tr);
 		tr = $("<tr>");
 		tr.append("<td>HP</td>");

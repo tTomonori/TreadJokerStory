@@ -102,7 +102,7 @@ let mMapData={
 ]
 }
 var mMyChara;
-Database.loadSaveData(()=>{
+SaveDatabase.loadSaveData(()=>{
 	PreImage.preLoadMapChip(mMapData,()=>{
 		Map.setMap(mMapData)
 		mMyChara=Map.createHero(3,3,"5_field/1345010501");
