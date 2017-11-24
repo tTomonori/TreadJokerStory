@@ -35,7 +35,7 @@ if(mSelectedCharas[0]!=""){
 }
 tQuest.questStart();
 }
-
+start();
 //バトル開始(quest以外)
 function normalStart(){
 // //トランプを並べる
@@ -198,6 +198,9 @@ function winner(aWinner){
 	if(mCommunicationFlag){//通信中ならサーバに終了通知
 		informFinish();
 	}
+	//勝敗を親ウィンドウへ
+	endBattle((aWinner=="T")?"win":"lose");
+
 	displayStatus();
 	let tWinnerTeam;
 	if(aWinner=="T") tWinnerTeam=mTrueTeam;
@@ -209,7 +212,7 @@ function winner(aWinner){
 	flowBand(tLog);
 	document.getElementById("text").innerHTML="winner is "+"<b style='color:"+tWinnerTeam[0].teamColor+"'>"+aWinner+"</b> team";
 
-	$("#finishButton")[0].style.display="block"
+	// $("#finishButton")[0].style.display="block"
 }
 
 //0からaNumまでのランダムな整数値を返す(引数を設定していないなら0から1未満の実数)
@@ -223,4 +226,9 @@ function makeRandom(aNum){
 		if(aNum!=undefined) return Math.floor(Math.random()*(aNum+1))
 		return Math.random();
 	}
+}
+//終了メッセージを送る
+function endBattle(aWinLose){
+	window.parent.setWinLose(aWinLose);
+	setTimeout(()=>{window.parent.postMessage("message", "*");},3000);
 }

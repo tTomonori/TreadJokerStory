@@ -24,7 +24,7 @@ class Card{
 		this.cardContainer.style.position="relative";
 		this.cardContainer.style="position:absolute;top:0;left:0;"
 		this.cardImage=document.createElement("img");
-		this.cardImage.src="../image/card.png";
+		this.cardImage.src="../image/battle/card.png";
 		this.cardImage.style="position:absolute;top:0;left:0;width:65px;height:65px;"
 		this.sootImage=document.createElement("img");
 		this.sootImage.style="position:absolute;top:0;left:0;width:50px;height:50px;position:absolute;margin-left:10px;margin-top:10px"
@@ -35,7 +35,7 @@ class Card{
 		this.specialOnerColorBack.style="position:absolute;top:10px;left:10px;width:38px;height:38px;border-radius:5px;display:none;";
 		// this.specialOnerColorBack.style="position:absolute;top:10px;left:10px;width:46px;height:46px;border-radius:5px;display:none;";
 		this.reversImage=document.createElement("img");
-		this.reversImage.src="../image/card_back.png";
+		this.reversImage.src="../image/battle/card_back.png";
 		this.reversImage.style="position:absolute;top:0;left:0;width:65px;height:65px;"
 		if(!this.revers) this.reversImage.style.display="none";
 		this.numberImage=document.createElement("p");
@@ -53,7 +53,7 @@ class Card{
 	setCardImage(){
 		//マーク
 		if(["spade","club","diamond","heart"].indexOf(this.getSoot())!=-1){
-			this.sootImage.src="../image/"+this.soot+".png";
+			this.sootImage.src="../image/battle/"+this.soot+".png";
 			this.sootImage.style.display="block";
 		}
 		else {

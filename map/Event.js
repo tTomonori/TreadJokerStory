@@ -26,6 +26,9 @@ class Event{
 					case "move"://移動
 						this.moveEvent(tEvent.directions,tChara).then(()=>{tOperateEvent(i+1)})
 						break;
+					case "battle"://バトル
+						this.battleEvent(tEvent.data).then(()=>{tOperateEvent(i+1)})
+						break;
 					default:
 					console.log("存在しないイベント");
 				}
@@ -53,7 +56,17 @@ class Event{
 		})
 	}
 	//バトルイベント
-	static battleEvent(){
-
+	static battleEvent(aData){
+		return new Promise((res,rej)=>{
+			Frame.displayBattle(aData).then(()=>{
+				//バトル終了
+				if(mWinLose=="win"){
+					res();
+				}
+				else if(mWinLose="lose"){
+					this.speakEvent("敗北した")
+				}
+			})
+		})
 	}
 }

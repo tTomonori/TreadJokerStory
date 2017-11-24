@@ -6,13 +6,7 @@
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>battle</title>
 </head>
-<script>
-	// You can also require other files to run in this process
-	require('../renderer.js')
-	const $=require("jquery");
-	const electron=require("electron");
-	const ipc=electron.ipcRenderer;
-</script>
+<script src="../jquery-3.2.1.min.js"></script>
 <style>
 input {
 background: #67c5ff;
@@ -149,15 +143,15 @@ color: white;
 <script src="../quest/QuestList.js"></script>
 
 <!-- データベース -->
-<script src="../database/database.js"></script>
+<!-- <script src="../database/database.js"></script> -->
 
 <script src="./battle.js"></script>
-<script src="./communicater.js"></script>
+<!-- <script src="./communicater.js"></script> -->
 <script>
 	var tDeck = "";
 	for(var i=0;i<15;i++){
 		tNum = i+1;
-		tDeck+="<img id='Card-"+tNum+"' src='../image/card.png' style='width:50px;height:50px;' onmouseover='displayDeck("+tNum+")' onmouseout='returnDeck()'>";
+		tDeck+="<img id='Card-"+tNum+"' src='../image/battle/card.png' style='width:50px;height:50px;' onmouseover='displayDeck("+tNum+")' onmouseout='returnDeck()'>";
 		// tDeck+="<img src='../image/"+tCard[1]+".png' style='width:50px;height:50px;position:absolute;margin-left:-57px;margin-top:13px'>";
 		if(tNum==1) {
 			tNum = "A"

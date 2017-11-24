@@ -18,7 +18,7 @@ function displayStatus(){
 function displayTeamStatus(aTag,aTeam){
 	for(let i=0;i<aTeam.length;i++){
 		aTag.innerHTML+="<div style='background:"+aTeam[i].teamColor+";margin:2px;width:90%;border-radius:10px;margin-bottom:10px;padding-bottom:5px'>"
-		+"<table style='width:100%;color:#ffffff'><tr><td rowspan='3' style='width:64px'><div style='width:64px;height:64px;overflow:hidden;'><img src='"+aTeam[i].getActorUrl()+"' style=''></div><img src='../image/"+aTeam[i].TYPE+".png' style='width:20px;margin-top:-20px;position:relative'></td>"
+		+"<table style='width:100%;color:#ffffff'><tr><td rowspan='3' style='width:64px'><div style='width:64px;height:64px;overflow:hidden;'><img src='"+aTeam[i].getActorUrl()+"' style=''></div><img src='../image/battle/"+aTeam[i].TYPE+".png' style='width:20px;margin-top:-20px;position:relative'></td>"
 		+"<td>"+aTeam[i].NAME+"</td></tr>"
 		+"<tr><td>HP:"+aTeam[i].HP+"/"+aTeam[i].maxHP
 		+"</td><tr><td>"+"MP:"+aTeam[i].MP+"/"+aTeam[i].maxMP+"</td></tr>"
@@ -49,7 +49,7 @@ function displayMoveable(aMoveable) {
 		tCard.style.width="65px";
 		tCard.style.height="65px";
 		tCard.style.opacity="0.6";
-		tCard.src="../image/card_canMove.png";
+		tCard.src="../image/battle/card_canMove.png";
 		tCardCell.appendChild(tCard);
 	}
 }
@@ -128,16 +128,16 @@ function attackable(aX,aY){
 			let tCardImage;
 			if(tSkill.F_ATTACK==true&&tSkill.E_ATTACK==true){
 				tDamageCharas=tMyTeam.concat(tEnemyTeam);
-				tCardImage="../image/card_indiscriminate.png";
+				tCardImage="../image/battle/card_indiscriminate.png";
 			}
 			else if(tSkill.F_ATTACK==true&&tSkill.E_ATTACK==false){
 				tDamageCharas=tMyTeam.concat();
 				t=10;
-				tCardImage="../image/card_friend.png";
+				tCardImage="../image/battle/card_friend.png";
 			}
 			else if(tSkill.F_ATTACK==false&&tSkill.E_ATTACK==true){
 				tDamageCharas=tEnemyTeam.concat();
-				tCardImage="../image/card_canAttack.png";
+				tCardImage="../image/battle/card_canAttack.png";
 			}
 			else if(tSkill.F_ATTACK==false&&tSkill.E_ATTACK==false){
 				return;

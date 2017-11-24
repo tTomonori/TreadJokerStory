@@ -85,10 +85,17 @@ let mMapData={
 		]
 	},
 	{
-		creature:"item",
-		item:["きのみ"],
-		position:{x:0,y:3},
-		image:{image:"base",x:5,y:50}
+		id:"6",
+		creature:"npc",
+		position:{x:1,y:3},
+		image:"pipo-charachip004",
+		size:2,
+		speak:[
+			{event:"turnToHero"},
+			{event:"speak",sentence:"バトル開始"},
+			{event:"battle",data:{}},
+			{event:"speak",sentence:"私の負けだ"}
+		]
 	},
 	{
 		creature:"chest",
@@ -109,7 +116,7 @@ SaveDatabase.loadSaveData(()=>{
 		KeyMonitor.setMapPage();
 	})
 	window.addEventListener('message', function(event,aMessage) {
-		KeyMonitor.closeFrame();
+		Frame.closeFrame();
 	}, false);
 });
 function getDatabase(){

@@ -419,7 +419,7 @@ class Chara{
 			"ATK:"+this.ATK+"<br>"+
 			"DEF:"+this.DEF+"<br>"+
 			"SPD:"+this.SPD+"<br>"+
-			"TYPE:"+"<img src='../image/"+this.TYPE+".png' style='height:18px;margin-top:0px;position:absolute'>"+"<br>"+
+			"TYPE:"+"<img src='../image/battle/"+this.TYPE+".png' style='height:18px;margin-top:0px;position:absolute'>"+"<br>"+
 			"MOV:"+this.MOV+"<br>"+
 			"<img src="+this.getFaceUrl()+" style='width:144px;height:144px;overflow:hidden'>"+
 			"</div>"
