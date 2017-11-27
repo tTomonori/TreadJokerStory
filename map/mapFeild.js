@@ -1,13 +1,13 @@
 let mMapData={
 	map:[
-		[08,08,07,00,00,00,00],
-		[08,08,06,09,09,09,09],
-		[08,08,06,09,09,09,09],
-		[08,08,05,04,04,04,04],
-		[08,08,08,08,08,08,08],
-		[10,10,10,08,10,10,10],
-		[10,08,08,08,08,08,10],
-		[10,08,08,10,10,10,10]
+		[08,08,08,08,08,08,08,07,00,00,00,00,00,00,00],
+		[08,08,08,08,08,08,08,06,09,09,09,09,09,09,09],
+		[08,08,08,08,08,08,08,06,09,09,09,09,09,09,09],
+		[08,08,08,08,08,08,08,05,04,04,04,04,04,04,04],
+		[08,08,08,08,08,08,08,08,08,08,08,08,08,08,08],
+		[10,10,10,08,10,10,10,08,08,08,08,08,08,08,08],
+		[10,08,08,08,08,08,10,10,08,08,08,08,08,08,08],
+		[10,08,08,10,10,10,10,10,10,08,08,08,08,08,08]
 	],
 	mapChip:{
 		0:{ground:{divide:true,lt:{image:"kusa1-tuti1",x:0,y:4},rt:{image:"kusa1-tuti1",x:1,y:4},lb:{image:"kusa1-tuti1",x:0,y:9},rb:{image:"kusa1-tuti1",x:1,y:9}},
@@ -92,9 +92,102 @@ let mMapData={
 		size:2,
 		speak:[
 			{event:"turnToHero"},
-			{event:"speak",sentence:"バトル開始"},
-			{event:"battle",data:{}},
+			{event:"branch",flag:"test",false:[
+				{event:"speak",sentence:"バトル開始"},
+				{event:"battle",data:{},win:[
+					{event:"speak",sentence:"私の負けだ"},
+					{event:"setFlag",flag:"test",value:"true"}
+				],lose:[
+					{event:"speak",sentence:"私の勝ちだ　また挑戦してくれ"}
+				]},
+			],
+		true:[
 			{event:"speak",sentence:"私の負けだ"}
+		]}
+		]
+	},
+	{
+		id:"group1",
+		creature:"npc",
+		position:{x:8,y:0},
+		image:"pipo-charachip018",
+		size:2,
+		speak:[
+			{event:"turnToHero"},
+			{event:"branch",flag:"group1",false:[
+				{event:"speak",sentence:"さあ勝負だ"},
+				{event:"battle",data:{},win:[
+					{event:"speak",sentence:"素晴らしい!他のメンバーにも挑戦してくれ。"},
+					{event:"setFlag",flag:"group1",value:"true"}
+				],lose:[
+					{event:"speak",sentence:"何度でも挑戦を受けてやるからまた来てくれ。"}
+				]},
+			],
+		true:[
+			{event:"speak",sentence:"私の試練はすでにクリアしているぞ。"}
+		]},
+		{event:"turn",direction:"down"}
+		]
+	},
+	{
+		id:"group2",
+		creature:"npc",
+		position:{x:10,y:0},
+		image:"pipo-charachip018f",
+		size:2,
+		speak:[
+			{event:"turnToHero"},
+			{event:"branch",flag:"group2",false:[
+				{event:"speak",sentence:"さあ勝負だ"},
+				{event:"battle",data:{},win:[
+					{event:"speak",sentence:"素晴らしい!他のメンバーにも挑戦してくれ。"},
+					{event:"setFlag",flag:"group2",value:"true"}
+				],lose:[
+					{event:"speak",sentence:"何度でも挑戦を受けてやるからまた来てくれ。"}
+				]},
+			],
+		true:[
+			{event:"speak",sentence:"私の試練はすでにクリアしているぞ。"}
+		]},
+		{event:"turn",direction:"down"}
+		]
+	},
+	{
+		id:"group3",
+		creature:"npc",
+		position:{x:12,y:0},
+		image:"pipo-charachip018g",
+		size:2,
+		speak:[
+			{event:"turnToHero"},
+			{event:"branch",flag:"group3",false:[
+				{event:"speak",sentence:"さあ勝負だ"},
+				{event:"battle",data:{},win:[
+					{event:"speak",sentence:"素晴らしい!他のメンバーにも挑戦してくれ。"},
+					{event:"setFlag",flag:"group3",value:"true"}
+				],lose:[
+					{event:"speak",sentence:"何度でも挑戦を受けてやるからまた来てくれ。"}
+				]},
+			],
+		true:[
+			{event:"speak",sentence:"私の試練はすでにクリアしているぞ。"}
+		]},
+		{event:"turn",direction:"down"}
+		]
+	},
+	{
+		id:"groupLeader",
+		creature:"npc",
+		position:{x:14,y:1},
+		image:"pipo-charachip016b",
+		size:2,
+		speak:[
+			{event:"turnToHero"},
+			{event:"branch",flag:"group1",false:[{event:"speak",sentence:"上にいる三人全員に勝利したら私に話かけてくれ。"},{event:"turn",direction:"down"},{event:"end"}],true:[]},
+			{event:"branch",flag:"group2",false:[{event:"speak",sentence:"上にいる三人全員に勝利したら私に話かけてくれ。"},{event:"turn",direction:"down"},{event:"end"}],true:[]},
+			{event:"branch",flag:"group3",false:[{event:"speak",sentence:"上にいる三人全員に勝利したら私に話かけてくれ。"},{event:"turn",direction:"down"},{event:"end"}],true:[]},
+			{event:"speak",sentence:"ブラボー!!"},
+			{event:"turn",direction:"down"}
 		]
 	},
 	{

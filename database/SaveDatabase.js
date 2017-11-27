@@ -107,17 +107,15 @@ class SaveDatabase{
 		this.position=aData;
 	}
 	//フラグ取得
-	static getFlag(aMapName,aFlagName){
+	static getFlag(aFlagName){
 		let tFlag=this.flag;
-		if(tFlag[aMapName]==undefined)return false;
-		if(tFlag[aMapName][aFlagName]==undefined)return false;
-		return tFlag[aMapName][aFlagName];
+		if(tFlag[aFlagName]==undefined)return false;
+		return tFlag[aFlagName];
 	}
 	//フラグセット
-	static setFlag(aMapName,aFlagName,aFlag){
+	static setFlag(aFlagName,aFlag){
 		let tFlag=this.flag;
-		if(tFlag[aMapName]==undefined)tFlag[aMapName]={};
-		tFlag[aMapName][aFlagName]=aFlag;
+		tFlag[aFlagName]=aFlag;
 	}
 	//データをセーブ
 	static saveData(){

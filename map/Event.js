@@ -27,10 +27,35 @@ class Event{
 						this.moveEvent(tEvent.directions,tChara).then(()=>{tOperateEvent(i+1)})
 						break;
 					case "battle"://バトル
-						this.battleEvent(tEvent.data).then(()=>{tOperateEvent(i+1)})
+						this.battleEvent(tEvent.data).then((aWinOrLose)=>{
+							this.operateEventList(tEvent[aWinOrLose],aChara).then((aFlag)=>{
+								if(aFlag=="end"){
+									res("end");
+									return;
+								}
+								tOperateEvent(i+1);
+							})
+						})
+						break;
+					case "branch"://条件分岐
+						let tFlag=SaveDatabase.getFlag(tEvent.flag);
+						this.operateEventList(tEvent[tFlag],aChara).then((aFlag)=>{
+							if(aFlag=="end"){
+								res("end");
+								return;
+							}
+							tOperateEvent(i+1);
+						})
+						break;
+					case "setFlag"://フラグセット
+						SaveDatabase.setFlag(tEvent.flag,tEvent.value);
+						tOperateEvent(i+1);
+						break;
+					case "end"://イベント強制終了
+						res("end");
 						break;
 					default:
-					console.log("存在しないイベント");
+					console.log("存在しないイベント",tEvent);
 				}
 			}
 			tOperateEvent(0);
@@ -61,10 +86,11 @@ class Event{
 			Frame.displayBattle(aData).then(()=>{
 				//バトル終了
 				if(mWinLose=="win"){
-					res();
+					res("win");
 				}
 				else if(mWinLose="lose"){
-					this.speakEvent("敗北した")
+					res("lose");
+					// this.speakEvent("敗北した")
 				}
 			})
 		})
